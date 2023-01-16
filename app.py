@@ -14,6 +14,7 @@ def index():
 
 @app.route('/line', methods=['GET'])
 def line_get():
+    # mongodb에서 예문으로 사용할 영화 대사 정보 불러오기
     movie_lines = list(db.movieLines.find({},{'_id': False}))
     # line_receive = request.args.get('line_give')
     return jsonify({'movieLines': movie_lines})
