@@ -1,5 +1,6 @@
 const quoteDisplayElement = document.getElementById('scriptContainer');
 const quoteInputElement = document.getElementById('text-input');
+const initialShowAndHide = quoteDisplayElement.querySelectorAll('span.text-word');
 let wordSelectorIndex = 0;
 
 // Test quote generater.
@@ -53,8 +54,38 @@ quoteInputElement.addEventListener('input', (e) => {
                 quoteInputElement.value = '';
                 wordSelectorIndex++;
             }
+            lineBreakManager(arrayQuote[wordSelectorIndex], arrayQuote);
+            lineHideAndShow(arrayQuote);
         }
     } else {
         quoteInputElement.value = '';
     }
 });
+
+const lineBreakManager = (domCountElement, domHistory) => {
+    const rectPosition = domCountElement.getBoundingClientRect();
+    if (!(rectPosition['y'] == 335.75)) {
+        for (let i = 0; i <= wordSelectorIndex; i++) {
+            domHistory[i].remove();
+        };
+        wordSelectorIndex = 0;
+    };
+};
+
+const lineHideAndShow = (domHideElement) => {
+    if (domHideElement.length === 0) return;
+    //console.log(domHideElement);
+    for (let i = 0; i <= quoteWordArray.length; i++) {
+        if (!domHideElement[i]) return;
+        //console.log(quoteWordArray);
+        //console.log(domHideElement[i]);
+        const rectPositionToHide = domHideElement[i].getBoundingClientRect();
+        if (rectPositionToHide['y'] >= 512.75) {
+            domHideElement[i].classList.add('hide');
+        } else {
+            domHideElement[i].classList.remove('hide');
+        };
+    };
+};
+
+window.onload = lineHideAndShow(initialShowAndHide);
