@@ -15,7 +15,7 @@ def index():
 @app.route('/line', methods=['GET'])
 def line_get():
     movie_lines = list(db.movieLines.find({},{'_id': False}))
-    line_receive = request.args.get('line_give')
+    # line_receive = request.args.get('line_give')
     return jsonify({'movieLines': movie_lines})
 
 if __name__ == "__main__":
