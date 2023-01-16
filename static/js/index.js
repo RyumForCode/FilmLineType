@@ -1,6 +1,5 @@
 const quoteDisplayElement = document.getElementById('scriptContainer');
 const quoteInputElement = document.getElementById('text-input');
-const initialShowAndHide = quoteDisplayElement.querySelectorAll('span.text-word');
 let wordSelectorIndex = 0;
 
 // Test quote generater.
@@ -20,6 +19,7 @@ quoteWordArray.forEach((word) => {
     });
 });
 // Test quote generater end.
+const initialShowAndHide = quoteDisplayElement.querySelectorAll('span.text-word');
 
 quoteInputElement.addEventListener('input', (e) => {
     const arrayQuote = quoteDisplayElement.querySelectorAll('span.text-word');
