@@ -74,11 +74,8 @@ const lineBreakManager = (domCountElement, domHistory) => {
 
 const lineHideAndShow = (domHideElement) => {
     if (domHideElement.length === 0) return;
-    //console.log(domHideElement);
     for (let i = 0; i <= quoteWordArray.length; i++) {
         if (!domHideElement[i]) return;
-        //console.log(quoteWordArray);
-        //console.log(domHideElement[i]);
         const rectPositionToHide = domHideElement[i].getBoundingClientRect();
         if (rectPositionToHide['y'] >= 512.75) {
             domHideElement[i].classList.add('hide');
