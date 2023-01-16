@@ -1,157 +1,64 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset='UTF-8'>
-    <title>Film Line Type</title>
-    <link rel='stylesheet' type='text/css' href='../static/css/index.css'>
-    <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-    <script src='../static/js/index.js'></script>
-
-    <style>
-        .typingBox p span {
-            position: relative;
-        }
-
-        .typingBox p span.correct {
-            color: cornflowerblue;
-        }
-
-        .typingBox p span.incorrect {
-            color: firebrick;
-        }
-
-        .typingBox p span.active {
-            color: #17a2b8;
-        }
-
-        .typingBox p span.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-            height: 2px;
-            background: antiquewhite;
-            animation: blink 1s ease-in-out infinite;
-            opacity: 0;
-        }
-        @keyframes blink {
-            50% {opacity: 1;}
-        }
-    </style>
-
-</head>
-<body>
-<div class='container'>
-    <h1>Film Line Type</h1>
-    <div id='timer' class="timer">180</div>
-    <div class='typingBox'>
-        <p></p>
-    </div>
-    <div id='contents-bar'>
-        <input type='text' name='text-input' id='text-input' class="text-field" onkeydown="if(window.event.keyCode==65,66,67,68,69,70){timer()}">
-        <div>
-            <div id='indicator-wpm'><span id='wpm-value' class="wpm-value">50</span> WPM</div>
-            <div id='indicator-accurate'>ACC <span id='acc-value' class="acc-value">100%</span></div>
+    <head>
+        <meta charset = 'UTF-8'>
+        <title>Film Line Type</title>
+        <link rel = 'stylesheet' type = 'text/css' href = '../static/css/index.css'>
+        <script src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
+        <script src = '../static/js/index.js'></script>
+    </head>
+    <body>
+        <div class = 'container'>
+            <h1>Film Line Type</h1>
+            <div id = 'timer'></div>
+            <div class = 'scriptContainer'>
+                <span class = 'text-word'>
+                    <span class = 'text-char correct'>T</span>
+                    <span class = 'text-char incorrect'>h</span>
+                    <span class = 'text-char'>i</span>
+                    <span class = 'text-char'>s</span>
+                    <span class = 'text-char'> </span>
+                </span>
+                <span class = 'text-word'>
+                    <span class = 'text-char'>w</span>
+                    <span class = 'text-char'>o</span>
+                    <span class = 'text-char'>r</span>
+                    <span class = 'text-char'>d</span>
+                    <span class = 'text-char'> </span>
+                </span>
+                <span class = 'text-word'>
+                    <span class = 'text-char'>i</span>
+                    <span class = 'text-char'>s</span>
+                    <span class = 'text-char'> </span>
+                </span>
+                <span class = 'text-word'>
+                    <span class = 'text-char'>M</span>
+                    <span class = 'text-char'>o</span>
+                    <span class = 'text-char'>v</span>
+                    <span class = 'text-char'>i</span>
+                    <span class = 'text-char'>e</span>
+                    <span class = 'text-char'> </span>
+                </span>
+                <span class = 'text-word'>
+                    <span class = 'text-char'>L</span>
+                    <span class = 'text-char'>i</span>
+                    <span class = 'text-char'>n</span>
+                    <span class = 'text-char'>e</span>
+                    <span class = 'text-char'> </span>
+                </span>
+                <span class = 'text-word'>
+                    <span class = 'text-char'>T</span>
+                    <span class = 'text-char'>y</span>
+                    <span class = 'text-char'>p</span>
+                    <span class = 'text-char'>e</span>
+                    <span class = 'text-char'>.</span>
+                </span>
+            </div>
+            <div id = 'contents-bar'>
+                <input type = 'text' name = 'text-input' id = 'text-input' onkeydown="if(window.event.keyCode==65,66,67,68,69,70){timer()}">
+                <div id = 'indicator-wpm'><span id = 'wpm-value'>50</span> WPM</div>
+                <div id = 'indicator-accurate'>ACC <span id = 'acc-value'>100%</span></div>
+            </div>
         </div>
-    </div>
-</div>
-
-    <script>
-        // 타이핑 데이터 하드코딩 예) -> api로 불러올 예정
-        const textData = ["Success is walking from failure to failure with no loss of enthusiasm",
-            "The way to get started is to quit talking and begin doing"];
-
-        // 타이핑데이터 id
-        const typingText = document.querySelector(".typingBox p")
-        // input데이터박스 id
-        const inputTextField = document.querySelector(".text-field")
-        // 타이머 id
-        const timeLimit = document.querySelector(".timer")
-        // wpm id
-        const wpm = document.querySelector(".wpm-value")
-        // cpm id -> 사용안할 변수라 삭제 예정
-        const cpm = document.querySelector(".acc-value")
-
-        let charIndex = 0;
-        let mistakes = 0;
-        let timer = 60;     // 타이머는 합의 후 변경 예정
-        let maxTime = 60;   // 타이머는 합의 후 변경 예정
-        let timeLeft = maxTime;
-        let isTyping = 0;
-
-        function randomTypingText() {
-            let randomIndex = Math.floor(Math.random() * textData.length)
-            console.log()
-            typingText.innerHTML = "";
-            textData[randomIndex].split("").forEach(span => {
-                let spanTag = `<span>${span}</span>`;
-                typingText.innerHTML += spanTag;
-            })
-            document.addEventListener("keydown", () => inputTextField.focus());
-            typingText.addEventListener("click", () => inputTextField.focus());
-        }
-
-        function typingStart() {
-            const char = typingText.querySelectorAll("span");
-            let typedChar = inputTextField.value.split("")[charIndex]
-
-            // 게임이 종료 되지 않은 경우 에만
-            if (charIndex < char.length -1 && timeLeft > 0 ) {
-                if(!isTyping) {
-                    isTyping = true
-                    timer = setInterval(initTimer, 1000)
-                }
-                // 잘못된 영타 한글자 지울때
-                if (typedChar == null) {
-                    charIndex--;
-                    // 틀린거 지울 시, mistakes 카운트 차감 -> wpm 때문에 카운트는 필요함
-                    if(char[charIndex].classList.contains("incorrect")){
-                        mistakes--;
-                    }
-                    char[charIndex].classList.remove("correct", "incorrect")
-                } else {
-                    // 글자를 입력한 경우
-                    if (char[charIndex].innerText === typedChar) {
-                        char[charIndex].classList.add("correct")
-                    } else {
-                        mistakes++;
-                        char[charIndex].classList.add("incorrect")
-                    }
-                    charIndex++;
-                }
-                // 입력할 글자 하이라이트 작업 -> 그치만 지상님 css로 따라갈 예정
-                char.forEach(span => span.classList.remove("active")); // 지나간 부분은 active를 다 지우고
-                char[charIndex].classList.add("active") // focus된 charIndex된 것은 active add
-
-                // mistake 갱신용인데 필요없을 듯 우리는 acc로 계산
-                //typingMistake.innerText = mistakes;
-
-                // wpm 및 cpm 계산
-                // wpm 계산식은 변경 가능 있음
-                let wpmText = Math.round((((charIndex - mistakes)/5) / (maxTime - timeLeft)) * 60);
-                wpmText = wpmText < 0 || ! wpmText || wpmText == Infinity ? 0 : wpmText;
-                wpm.innerText = wpmText;
-            } else {
-                // 게임 종료시 타이머 종료
-                clearInterval(timer)
-                inputTextField.value = "";
-            }
-        }
-        function initTimer() {
-            if (timeLeft > 0) {
-                timeLeft --;
-                timeLimit.innerText = timeLeft;
-            } else {
-                clearInterval(timer)
-            }
-        }
-        // 타이핑할 문장 랜덤 출력 실행
-        randomTypingText()
-
-        // 키 입력 이벤트 함수 실행
-        inputTextField.addEventListener("input", typingStart)
-
-    </script>
-</body>
+    </body>
 </html>
