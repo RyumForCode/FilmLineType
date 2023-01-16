@@ -5,42 +5,7 @@
     <title>Film Line Type</title>
     <link rel='stylesheet' type='text/css' href='../static/css/index.css'>
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-    <script>
-        $(document).ready(function () {
-            get_line_info();
-        })
-
-        function get_line_info() {
-            $.ajax({
-                type: 'GET',
-                url: '/line',
-                data: {},
-                success: function (response) {
-                    console.log(response['movieLines'])
-                }
-            })
-        }
-
-        function extract_random_line() {
-            $.ajax({
-                type: 'GET',
-                url: '/line',
-                data: {},
-                success: function (response) {
-                    console.log(response['movieLines'][random_int()])
-                }
-            })
-
-
-        }
-
-        function random_int() {
-            const line_no = Math.floor(Math.random() * 732)
-            return line_no
-        }
-
-
-    </script>
+    <script src = '../static/js/index.js' defer></script>
 </head>
 <body>
 <div class='container'>
