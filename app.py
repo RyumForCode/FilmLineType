@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
 
-
 from pymongo import MongoClient
 client = MongoClient('mongodb+srv://test:sparta@cluster0.jq6qj7m.mongodb.net/Cluster0?retryWrites=true&w=majority')
 db = client.dbsparta
@@ -10,7 +9,6 @@ db = client.dbsparta
 @app.route('/')
 def index():
     return render_template('index.html')
-
 
 @app.route('/line', methods=['GET'])
 def line_get():
