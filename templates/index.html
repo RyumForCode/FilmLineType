@@ -5,7 +5,24 @@
         <title>Film Line Type</title>
         <link rel = 'stylesheet' type = 'text/css' href = '../static/css/index.css'>
         <script src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-        <script src = '../static/js/index.js'></script>
+        <script>
+            $(document).ready(function (){
+                get_line_info();
+            })
+
+            function  get_line_info(){
+                $.ajax({
+                    type:'GET',
+                    url: '/line',
+                    data:{},
+                    success: function(response){
+                        console.log(response['movieLines'])
+                    }
+                })
+            }
+
+
+        </script>
     </head>
     <body>
         <div class = 'container'>
