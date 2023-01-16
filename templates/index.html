@@ -5,13 +5,13 @@
         <title>Film Line Type</title>
         <link rel = 'stylesheet' type = 'text/css' href = '../static/css/index.css'>
         <script src = 'https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js'></script>
-        <script src = '../static/js/index.js'></script>
+        <script src = '../static/js/index.js' defer></script>
     </head>
     <body>
         <div class = 'container'>
-            <h1>Film Line Type</h1>
+            <h1><span id = 'filmline'>Film Line</span> Type</h1>
             <div id = 'timer'></div>
-            <div class = 'scriptContainer'>
+            <div id = 'scriptContainer'>
             </div>
             <div id = 'contents-bar'>
                 <input type = 'text' name = 'text-input' id = 'text-input' onkeydown="if(window.event.keyCode==65,66,67,68,69,70){timer()}">
