@@ -1,8 +1,13 @@
+// Session storage
+const pageStorage = window.sessionStorage;
+let wpmStorage = 0;
+let accStorage = 0;
+
 const quoteDisplayElement = document.getElementById('scriptContainer');
 const quoteInputElement = document.getElementById('text-input');
 let wordSelectorIndex = 0;
 
-//wpm & acc var
+// WPM & ACC var
 const wpmTag = document.getElementById('wpm-value');
 const accTag = document.getElementById('acc-value');
 let solveCount = 0;
@@ -109,7 +114,7 @@ let whenTypeBegin = false;
     //if ()
 //};
 
-/*
+
 // 한번만 실행 되는 함수 is_action()
 let is_action = false;
 function timer() {
@@ -134,17 +139,20 @@ function timer() {
         if (setTime < 0) {
             clearInterval(x);
             document.getElementById("timer").innerHTML = "Time out";
+            storeWPMandACC();
+            location.href = '/result';
         }
         totalTime += 1/60;
     }, 1000);
 }
-*/
+
 
 // WPM calculator
 const wpmCalculate = () => {
     let wpmText = ((solveCount/5)/(totalTime));
     wpmText = (wpmText == Infinity ? 0 : wpmText);
     wpmTag.innerText = Math.round(wpmText);
+    wpmStorage = Math.round(wpmText);
 }
 
 // Accuracy calculator
@@ -152,4 +160,10 @@ const accCalculate = () => {
     let accuracyText = ((wholeCount - failureCount) / wholeCount);
     accuracyText = accuracyText < 0 || !accuracyText || accuracyText ==Infinity ? 0:accuracyText;
     accTag.innerText=Math.round(accuracyText*100) + '%';
+    accStorage = Math.round(accuracyText * 100);
 }
+
+const storeWPMandACC = () => {
+    pageStorage.setItem('wpmValue', wpmStorage);
+    pageStorage.setItem('accValue', accStorage);
+};

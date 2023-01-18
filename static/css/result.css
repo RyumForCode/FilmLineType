@@ -1,0 +1,92 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/static/pretendard.css");
+
+* {
+    margin : 0;
+    padding : 0;
+    color : #000;
+    font-family: 'Pretendard';
+    box-sizing : border-box;
+}
+
+html {
+    font-size : 16px;
+}
+
+::selection {
+    background : #00B775;
+}
+
+.container {
+    display : flex;
+    flex-direction: column;
+    justify-content : center;
+    width : 50%;
+    height : 100vh;
+    margin : auto;
+    font-size : 1rem;
+    font-weight : 400;
+    vertical-align : middle;
+}
+
+.container h1 {
+    font-size : 4rem;
+    font-weight : 900;
+    text-align : center;
+    width : 100%;
+}
+
+#filmline {
+    color : #00B775;
+}
+
+#contents-bar {
+    display : flex;
+    margin-top : 1rem;
+    justify-content : center;
+}
+
+#indicator-wpm {
+    font-size : 1rem;
+    font-weight : 700;
+    color : #00B775;
+    padding : 1rem;
+    border-radius : 0.5rem;
+    background-color : white;
+    box-shadow : 0 0 16px 0 rgba(0, 0, 0, .15);
+    margin-right : 1rem;
+}
+
+#indicator-accurate {
+    font-size : 1rem;
+    font-weight : 700;
+    color : #00B775;
+    padding : 1rem 1rem;
+    border-radius : 0.5rem;
+    background-color : white;
+    box-shadow : 0 0 16px 0 rgba(0, 0, 0, .15);
+    margin-right : 1rem;
+}
+
+#wpm-value, #acc-value {
+    color : #3f3f3f;
+}
+
+#retry-button {
+    font-size : 1rem;
+    font-weight : 700;
+    color : white;
+    padding : 1rem 1rem;
+    border-radius : 0.5rem;
+    background-color : #00B775;
+    box-shadow : 0 0 16px 0 rgba(0, 0, 0, .15);
+    border : none;
+    transition : background-color 200ms;
+}
+
+#retry-button:hover {
+    background-color : #00d587;
+}
+
+#retry-button:active {
+    background-color : #00754a;
+}
