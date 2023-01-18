@@ -1,31 +1,3 @@
-// 영화 대사 관련 정보 중 하나의 대사를 랜덤으로 리턴
-// response['movieLines'][random_int()] 리턴 형태:
-//
-//         {
-//             "movie": "Star Wars: Episode V - The Empire Strikes Back",
-//             "num": 0,
-//             "quote": "Do, or do not. There is no try.",
-//             "type": "movie",
-//             "year": 1890
-//         }
-/*
-function extract_random_line() {
-    $.ajax({
-        type: 'GET',
-        url: '/line',
-        data: {},
-        success: function (response) {
-            {
-                return response['movieLines'][random_int()]['quote'];
-            }
-        }
-    })
-}
-*/
-//upperSide = Protocol
-
-//lowerSide = Main contents implement
-
 const quoteDisplayElement = document.getElementById('scriptContainer');
 const quoteInputElement = document.getElementById('text-input');
 let wordSelectorIndex = 0;
@@ -37,8 +9,7 @@ let solveCount = 0;
 let wholeCount = 0;
 let failureCount = 0;
 
-
-// Test quote generater.
+// Quote generater
 const quote = 'This is the test quote. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam quis tortor placerat, semper libero non, tincidunt enim. Pellentesque hendrerit porta est, ut placerat purus. Etiam pulvinar neque sem, nec imperdiet orci aliquet vel. Fusce ut gravida felis, nec blandit diam. Donec fermentum luctus metus vel tempor. Vivamus pharetra, libero at rutrum commodo, ipsum turpis malesuada sapien, a blandit justo sem vitae lacus. Donec fringilla maximus tellus, a eleifend quam cursus at. Donec maximus ornare eros, nec eleifend tellus. Mauris nec pretium urna. Suspendisse tincidunt accumsan velit. Integer nec eleifend sem. Nam mattis egestas vulputate. Donec posuere ex a leo hendrerit, et ultricies enim fringilla.';
 const quoteWordArray = quote.split(' ');
 
@@ -54,8 +25,8 @@ quoteWordArray.forEach((word) => {
         textWord.appendChild(textChar);
     });
 });
-// Test quote generater end.
 
+// Type checker
 quoteInputElement.addEventListener('input', (e) => {
     const arrayQuote = quoteDisplayElement.querySelectorAll('span.text-word');
     const arrayValue = quoteInputElement.value.split('');
@@ -129,16 +100,16 @@ const lineHideAndShow = (domHideElement) => {
 
 window.onload = lineHideAndShow(initialShowAndHide);
 
-//0~731 랜덤 정수
-function random_int() {
-    const line_no = Math.floor(Math.random() * 732)
-    return line_no
-}
+// Timer
+let setTime = 30;
+let totalTime = 0;
+let whenTypeBegin = false;
 
-//time
-let time = 30;
-let increaseTime = 0;
+//const Timer = () => {
+    //if ()
+//};
 
+/*
 // 한번만 실행 되는 함수 is_action()
 let is_action = false;
 function timer() {
@@ -150,36 +121,33 @@ function timer() {
     let sec = "";
 
     let x = setInterval(function () {
-        min = parseInt(time / 60);
-        sec = time % 60;
+        min = parseInt(setTime / 60);
+        sec = setTime % 60;
 
-        if (sec > 9) {sec = time % 60
-        } else {sec = "0" + time % 60}
+        if (sec > 9) {sec = setTime % 60
+        } else {sec = "0" + setTime % 60}
 
         // HTML에 출력 되는 양식
         document.getElementById("timer").innerHTML = sec;
-        time--;
+        setTime--;
         // 함수 timer() 가 끝나면 실행 되는 코드
-        if (time < 0) {
+        if (setTime < 0) {
             clearInterval(x);
             document.getElementById("timer").innerHTML = "Time out";
         }
-        increaseTime += 1/60;
+        totalTime += 1/60;
     }, 1000);
 }
+*/
 
-
-//WPM counter implement
-
-// wpm 및 cpm 계산
-// wpm 계산식은 변경 가능 있음
+// WPM calculator
 const wpmCalculate = () => {
-    let wpmText = ((solveCount/5)/(increaseTime));
-    //console.log(time);
-    wpmText = wpmText < 0 || ! wpmText || wpmText == Infinity ? 0 : wpmText;
+    let wpmText = ((solveCount/5)/(totalTime));
+    wpmText = (wpmText == Infinity ? 0 : wpmText);
     wpmTag.innerText = Math.round(wpmText);
 }
 
+// Accuracy calculator
 const accCalculate = () => {
     let accuracyText = ((wholeCount - failureCount) / wholeCount);
     accuracyText = accuracyText < 0 || !accuracyText || accuracyText ==Infinity ? 0:accuracyText;
